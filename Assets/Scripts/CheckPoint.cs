@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    public Action onCheckpointTrigger;
+    public Action OnCheckpointTrigger;
 
     private void OnTriggerEnter(Collider other)
     {
-        onCheckpointTrigger?.Invoke();
+        OnCheckpointTrigger?.Invoke();
     }
 }

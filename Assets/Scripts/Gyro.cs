@@ -115,7 +115,7 @@ public class Gyro : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(transform.position, -Vector3.up, out hit, _maxRange, _layermask))
                 {
-                    Debug.Log("gyro is working");
+                    //Debug.Log("gyro is working");
                     _desiredRotation += hit.normal; //always has a weight of 1
                     _debugLines.Add(new Line(transform.position, transform.position - Vector3.up * _maxRange,Color.blue));
                 }
@@ -127,7 +127,7 @@ public class Gyro : MonoBehaviour
 
                 if (Physics.Raycast(g.transform.position, -g.transform.up, out hit, g.range, _layermask)) 
                 {
-                    Debug.Log("gyro is working");
+                    //Debug.Log("gyro is working");
                     _desiredRotation += hit.normal * g.weight;
                     _debugLines.Add(new Line(g.transform.position, g.transform.position - (g.transform.up * g.range), Color.blue));
                 }
@@ -140,7 +140,7 @@ public class Gyro : MonoBehaviour
             }
             else
             {
-                Debug.Log("no hits on gyro sensors");
+                //Debug.Log("no hits on gyro sensors");
                 _desiredRotation = Vector3.up;
             }
 

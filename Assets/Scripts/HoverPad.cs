@@ -9,6 +9,9 @@ public class HoverPad : MonoBehaviour
     [SerializeField] float _maxForce;
     [SerializeField] float _minForce;
     [SerializeField] float _dampenAmount;
+
+    public bool grounded { get; private set; }
+
     float _dampenValue;
     int _layermask;
     Rigidbody _rb;
@@ -26,6 +29,7 @@ public class HoverPad : MonoBehaviour
 
     private void FixedUpdate()
     {
+        grounded = false;
         if (_rb != null)
         {
             RaycastHit hit;
@@ -37,6 +41,7 @@ public class HoverPad : MonoBehaviour
                         float force = Mathf.Lerp(_maxForce, _minForce, (hit.distance - _minRange) / _maxRange);
                         force -= Mathf.Clamp(Vector3.Project(_rb.velocity,transform.up).magnitude * _dampenAmount, 0,force);
                         _rb.AddForceAtPosition(force * transform.up, transform.position);
+                        grounded = true;
                         //Debug.Log("Hoverpad - Distance: " + hit.distance + " Force: " + force);
                     }
                     break;
@@ -53,6 +58,7 @@ public class HoverPad : MonoBehaviour
                         _rb.AddForceAtPosition(force * transform.up, transform.position);
                         //Debug.Log("Hoverpad - Distance: " + hit.distance + " Force: " + force);
                         _hits[0] = true;
+                        grounded = true;
                     }
                     break;
 
@@ -82,6 +88,7 @@ public class HoverPad : MonoBehaviour
                             _rb.AddForceAtPosition((force/3) * -rayDirection[i],transform.position);
                             //Debug.Log("Hoverpad - Distance: " + hit.distance + " Force: " + force);
                             _hits[i] = true;
+                            grounded = true;
                         }
                     }
                     break;
