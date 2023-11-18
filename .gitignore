@@ -61,6 +61,9 @@ sysinfo.txt
 *.unitypackage
 *.app
 
+# substance painter source
+*.spp
+
 # Crashlytics generated file
 crashlytics-build.properties
 
