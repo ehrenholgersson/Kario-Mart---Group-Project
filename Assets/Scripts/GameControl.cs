@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] Steer _wheelcar;
     [SerializeField] RocketSteer _rocketcar;
     [SerializeField] List<CheckPoint> _checkpoints = new List<CheckPoint>();
+    [SerializeField] GameObject _menu;
 
     bool _accel, _steerL, _steerR;
     float _throttle;
@@ -54,6 +57,11 @@ public class GameControl : MonoBehaviour
         }
         _ui.steering = _steering;
         _ui.throttle = _throttle;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleMenu();
+        }
         #endregion
         #region Race 
         _raceTimer += Time.deltaTime;
@@ -76,6 +84,31 @@ public class GameControl : MonoBehaviour
         {
             UIText.DisplayText("Finished");
             // race is finished
+        }
+    }
+
+    public void QuitButton()
+    {
+        Application.Quit();
+    }
+
+    public void RestartButton()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }
+
+    public void ToggleMenu()
+    {
+        if (_menu.activeSelf)
+        {
+            _menu.SetActive(false);
+            Time.timeScale = 1;
+        }
+        else
+        {
+            _menu.SetActive(true);
+            Time.timeScale = 0;
         }
     }
 }
