@@ -24,3 +24,6 @@ public class Camera : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, _desiredPosition,Mathf.Clamp(_maxCameraSpeed / (transform.position - _desiredPosition).magnitude * Time.deltaTime,0f,1f));
     }
 }
+
+
+//Ryan Was Here
