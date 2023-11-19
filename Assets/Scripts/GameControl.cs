@@ -39,6 +39,12 @@ public class GameControl : MonoBehaviour
         }
     }
 
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -95,7 +101,7 @@ public class GameControl : MonoBehaviour
     public void RestartButton()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void ToggleMenu()
