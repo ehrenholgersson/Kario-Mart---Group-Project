@@ -1041,8 +1041,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 384792990}
-  m_LocalRotation: {x: 0.14217322, y: -0.69267523, z: 0.14217697, w: 0.69265693}
-  m_LocalPosition: {x: 598.6916, y: 130.23926, z: 804.1004}
+  m_LocalRotation: {x: 0.14217374, y: -0.69267136, z: 0.14217588, w: 0.69266087}
+  m_LocalPosition: {x: 598.69147, y: 130.23921, z: 804.10016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2714,8 +2714,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.14217322, y: -0.69267523, z: 0.14217697, w: 0.69265693}
-  m_LocalPosition: {x: 598.6916, y: 130.23926, z: 804.1004}
+  m_LocalRotation: {x: 0.14217374, y: -0.69267136, z: 0.14217588, w: 0.69266087}
+  m_LocalPosition: {x: 598.69147, y: 130.23921, z: 804.10016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6612,7 +6612,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1623110636}
         m_TargetAssemblyTypeName: GameControl, Assembly-CSharp
-        m_MethodName: ToggleMenu
+        m_MethodName: RestartButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
