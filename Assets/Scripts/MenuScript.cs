@@ -8,10 +8,12 @@ public class MenuScript : MonoBehaviour
 	public GameObject pausePanel;
 	public bool IsPaused;
 
-	void Start()
+	void Awake()
 	{
-		pausePanel.SetActive(false);
-		pausePanel.SetActive (false);
+		if (pausePanel != null)
+		{
+			pausePanel.SetActive(false);
+		}
 		Time.timeScale = 1f;
 		IsPaused = false;
 	}
