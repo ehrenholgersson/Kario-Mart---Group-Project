@@ -1,13 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerSetup
 { 
     List<PlayerCharacter> _characters = new List<PlayerCharacter>();
     int _selected;
-    static PlayerSetup _instance;
+     static PlayerSetup _instance;
     public static PlayerSetup SelectedCharacter { get => (_instance ?? new PlayerSetup()); } 
     public static GameObject PlayerPrefab { get => SelectedCharacter.ReturnCharacter(); }
     
