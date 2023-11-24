@@ -4,17 +4,19 @@ using System.Linq;
 using UnityEngine;
 
 public class PlayerSetup
-{
+{ 
     List<PlayerCharacter> _characters = new List<PlayerCharacter>();
     int _selected;
     static PlayerSetup _instance;
     public static PlayerSetup SelectedCharacter { get => (_instance ?? new PlayerSetup()); } //tryna be clever
-    public static GameObject PlayerPrefab { get => _instance.ReturnCharacter(); }
+    public static GameObject PlayerPrefab { get => SelectedCharacter.ReturnCharacter()??null; }
     
-    public static int TopSpeed { get => _instance.ReturnValue("TopSpeed"); }
-    public static int Acceleration { get => _instance.ReturnValue("Acceleration"); }
-    public static int Handling { get => _instance.ReturnValue("Handling"); }
-    public static int Grip { get => _instance.ReturnValue("Grip"); }
+    public static int TopSpeed { get => SelectedCharacter.ReturnValue("TopSpeed"); }
+    public static int Acceleration { get => SelectedCharacter.ReturnValue("Acceleration"); }
+    public static int Handling { get => SelectedCharacter.ReturnValue("Handling"); }
+    public static int Grip { get => SelectedCharacter.ReturnValue("Grip"); }
+    public static PlayerCharacter NextCharacter { get => SelectedCharacter.Next(); }
+    public static PlayerCharacter PreviousCharacter { get => SelectedCharacter.Previous(); }
 
     public PlayerSetup ()
     {
@@ -27,24 +29,31 @@ public class PlayerSetup
         }
     }
 
-    public void Next()
+    protected PlayerCharacter Next()
     {
         _selected = ((_selected + 1) % _characters.Count);
+        return _characters[_selected];
     }
 
-    public void Previous()
+    protected PlayerCharacter Previous()
     {
         _selected -= 1;
         if (_selected < 0)
         {
             _selected += _characters.Count;
         }
+        return _characters[_selected];
     }
 
     protected GameObject ReturnCharacter()
     {
-        return _characters[_selected].characterPrefab;
+        if ( _characters.Count > 0)
+        {
+            return _characters[_selected].characterPrefab;
+        }
+        return null;
     }
+        
     protected int ReturnValue(string Value)
     {
         switch (Value)
