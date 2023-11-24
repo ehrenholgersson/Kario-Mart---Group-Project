@@ -8,8 +8,8 @@ public class PlayerSetup
     List<PlayerCharacter> _characters = new List<PlayerCharacter>();
     int _selected;
     static PlayerSetup _instance;
-    public static PlayerSetup SelectedCharacter { get => (_instance ?? new PlayerSetup()); } //tryna be clever
-    public static GameObject PlayerPrefab { get => SelectedCharacter.ReturnCharacter()??null; }
+    public static PlayerSetup SelectedCharacter { get => (_instance ?? new PlayerSetup()); } 
+    public static GameObject PlayerPrefab { get => SelectedCharacter.ReturnCharacter(); }
     
     public static int TopSpeed { get => SelectedCharacter.ReturnValue("TopSpeed"); }
     public static int Acceleration { get => SelectedCharacter.ReturnValue("Acceleration"); }
