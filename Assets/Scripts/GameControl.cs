@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -19,6 +20,8 @@ public class GameControl : MonoBehaviour
     UIScript _ui;
     int _currentCheckpoint = 0;
     float _raceTimer = - 10;
+    bool _boost;
+    float _boostfuel = 1;
 
     public float RaceTimer { get => _raceTimer; }
     
@@ -38,7 +41,10 @@ public class GameControl : MonoBehaviour
             }
         }
     }
-
+    public void AddFuel(float amount)
+    {
+        _boostfuel += amount;
+    }    
 
     public void MainMenu()
     {
@@ -51,6 +57,7 @@ public class GameControl : MonoBehaviour
         #region Controls
         _steering = Input.GetAxis("Horizontal");
         _throttle = Input.GetAxis("Vertical");
+        _boost = Input.GetButton("Jump");
         if (_wheelcar != null)
         {
             _wheelcar._motorTorque = _throttle * 100;
@@ -60,9 +67,15 @@ public class GameControl : MonoBehaviour
         {
             _rocketcar.steer = _steering;
             _rocketcar.forward = _throttle;
+            _rocketcar.boost = (_boost && _boostfuel > 0);
         }
         _ui.steering = _steering;
         _ui.throttle = _throttle;
+        _ui.boost = _boostfuel;
+        if (_boost)
+        {
+            _boostfuel = Mathf.Clamp(_boostfuel- Time.deltaTime / 4, 0, 1);
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

@@ -7,11 +7,13 @@ public class RocketSteer : MonoBehaviour
 
     [SerializeField, Range(-1, 1)] public float steer;
     [SerializeField, Range(-1, 1)] public float forward;
+    public bool boost;
 
     [SerializeField] Rocket _mainEngine;
     [SerializeField] Rocket _steerleft;
     [SerializeField] Rocket _steerright;
     [SerializeField] float _maxforwardPower;
+    [SerializeField] float _boostPower;
     [SerializeField] float _maxSteerPower;
     [SerializeField] float _slideFrictionAmount;
     [SerializeField] float _BrakeForce;
@@ -50,6 +52,11 @@ public class RocketSteer : MonoBehaviour
     // Update is called once per frame //test
     void Update()
     {
+        _mainEngine.boost = boost;
+        if (boost)
+        {
+            forward = 1 + _boostPower;
+        }
         //Rotation = _rb.angularVelocity.y;
         if (_grounded)
         {
@@ -72,7 +79,11 @@ public class RocketSteer : MonoBehaviour
             _steerleft.SetPower(0);
             _steerright.SetPower(-steer * _maxSteerPower);
         }
-        
+        if (boost)
+        {
+            forward -= _boostPower;
+            boost = false;
+        }
     }
     private void FixedUpdate()
     {
