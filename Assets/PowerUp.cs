@@ -29,7 +29,7 @@ public class PowerUp : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("PowerUp");
-        if (_enabled && other.gameObject.tag == "Player" && other.gameObject.TryGetComponent<RocketSteer>(out RocketSteer player))
+        if (_enabled && other.gameObject.tag == "Player" && other.gameObject.TryGetComponent<HoverController>(out HoverController player))
         {
             switch (_type)
             {
@@ -37,6 +37,7 @@ public class PowerUp : MonoBehaviour
                     _control.AddFuel(0.25f);
                     break;
                 case Type.Shield:
+                    player.Shield();
                     break;
             }
             _enabled = false;

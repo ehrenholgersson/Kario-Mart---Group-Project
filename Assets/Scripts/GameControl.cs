@@ -7,28 +7,41 @@ using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour
 {
-    enum Mode { Rocket, Wheels }
+    public enum Mode { PreRace, Racing, Finished }
 
     [SerializeField] Steer _wheelcar;
-    [SerializeField] RocketSteer _rocketcar;
-    [SerializeField] List<CheckPoint> _checkpoints = new List<CheckPoint>();
+    [SerializeField] HoverController _rocketcar;
+    [SerializeField] protected List<CheckPoint> _checkpoints = new List<CheckPoint>();
     [SerializeField] GameObject _menu;
+
+    static GameControl _instance;   
+    public static GameObject RespawnPoint { get => _instance.PrevCheckpoint(); }
+    public static Action OnRaceStart;
 
     bool _accel, _steerL, _steerR;
     float _throttle;
     float _steering;
+
     UIScript _ui;
-    int _currentCheckpoint = 0;
+
+    protected int _currentCheckpoint = 0;
     float _raceTimer = - 10;
+    float _remainingTime = 20;
+    int countdown = 4;
+
     bool _boost;
     float _boostfuel = 1;
 
-    public float RaceTimer { get => _raceTimer; }
+    public static float RaceTimer { get => _instance._raceTimer; }
+    public static float RemainingTime { get => _instance._remainingTime; }
     
-    Mode _mode = Mode.Rocket;
+    Mode _mode = Mode.PreRace;
+    public static Mode RaceState { get => _instance._mode; }
     // Start is called before the first frame update
     void Start()
     {
+        if (_instance == null)
+            _instance = this;
         // get UI script to update onscreen throttle/steering
         _ui = GameObject.Find("UI").GetComponent<UIScript>();
         // setup checkpoints
@@ -40,6 +53,7 @@ public class GameControl : MonoBehaviour
                 _checkpoints[i].gameObject.SetActive(false);
             }
         }
+            
     }
     public void AddFuel(float amount)
     {
@@ -51,30 +65,58 @@ public class GameControl : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    GameObject PrevCheckpoint() 
+    {
+        if (_currentCheckpoint > 0)
+        {
+            return _checkpoints[_currentCheckpoint-1].gameObject;
+        }
+        return _checkpoints[0].gameObject;
+
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (_mode == Mode.PreRace)
+        {
+            if (Mathf.Abs(RaceTimer)< countdown-1)
+            {
+                countdown--;
+                if (countdown > 0)
+                    UIText.DisplayText(countdown.ToString());
+            }
+            if (RaceTimer >= 0)
+            {
+                UIText.DisplayText("GO!");
+                _mode = Mode.Racing;
+                OnRaceStart?.Invoke();
+            }
+        }
         #region Controls
-        _steering = Input.GetAxis("Horizontal");
-        _throttle = Input.GetAxis("Vertical");
-        _boost = Input.GetButton("Jump");
-        if (_wheelcar != null)
+        if (_mode == Mode.Racing)
         {
-            _wheelcar._motorTorque = _throttle * 100;
-            _wheelcar._steeringAngle = _steering * 100;
-        }
-        if (_rocketcar != null)
-        {
-            _rocketcar.steer = _steering;
-            _rocketcar.forward = _throttle;
-            _rocketcar.boost = (_boost && _boostfuel > 0);
-        }
-        _ui.steering = _steering;
-        _ui.throttle = _throttle;
-        _ui.boost = _boostfuel;
-        if (_boost)
-        {
-            _boostfuel = Mathf.Clamp(_boostfuel- Time.deltaTime / 4, 0, 1);
+            _steering = Input.GetAxis("Horizontal");
+            _throttle = Input.GetAxis("Vertical");
+            _boost = Input.GetButton("Jump");
+            if (_wheelcar != null)
+            {
+                _wheelcar._motorTorque = _throttle * 100;
+                _wheelcar._steeringAngle = _steering * 100;
+            }
+            if (_rocketcar != null)
+            {
+                _rocketcar.steer = _steering;
+                _rocketcar.forward = _throttle;
+                _rocketcar.boost = (_boost && _boostfuel > 0);
+            }
+            _ui.steering = _steering;
+            _ui.throttle = _throttle;
+            _ui.boost = _boostfuel;
+            if (_boost)
+            {
+                _boostfuel = Mathf.Clamp(_boostfuel - Time.deltaTime / 4, 0, 1);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -82,11 +124,27 @@ public class GameControl : MonoBehaviour
             ToggleMenu();
         }
         #endregion
-        #region Race 
-        _raceTimer += Time.deltaTime;
 
+        #region Race Timers
+        if (_mode != Mode.Finished)
+        {
+            _raceTimer += Time.deltaTime;
+        }
+        else
+        {
+            if (_remainingTime < 1 && !(_menu.activeSelf))
+                ToggleMenu();
+        }
+        if (_mode != Mode.PreRace) 
+            _remainingTime -= Time.deltaTime; 
+        if (_remainingTime < 0)
+        {
+            _mode = Mode.Finished;
+            _remainingTime = 6;
+            UIText.DisplayText("Times Up");
+            _rocketcar.PlayerDeath(20);
+        }
         #endregion
-
     }
     void NextCheckpoint()
     {
@@ -94,14 +152,18 @@ public class GameControl : MonoBehaviour
         {
             _checkpoints[_currentCheckpoint].OnCheckpointTrigger -= NextCheckpoint;
             _checkpoints[_currentCheckpoint].gameObject.SetActive(false);
+            _remainingTime += _checkpoints[_currentCheckpoint].ExtraTime;
             _currentCheckpoint++;
             _checkpoints[_currentCheckpoint].gameObject.SetActive(true);
             _checkpoints[_currentCheckpoint].OnCheckpointTrigger += NextCheckpoint;
-            UIText.DisplayText("Checkpoint!");
+            UIText.DisplayText("Checkpoint!",1);
+            
         }
         else
         {
             UIText.DisplayText("Finished");
+            _mode = Mode.Finished;
+            _remainingTime = 11;
             // race is finished
         }
     }

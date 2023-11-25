@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b6a924086430aa4b899a2bb4e80f353, type: 3}
-  m_Name: New PlayerCharacter
+  m_Name: Charlie
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 24501686652209499, guid: 989d5c1e368b832498bcd952abfdb9a9, type: 3}
   characterName: 
-  topSpeed: 4
-  acceleration: 4
-  handling: 4
+  topSpeed: 9
+  acceleration: 8
+  handling: 5
   grip: 4

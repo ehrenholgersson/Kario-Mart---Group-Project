@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class UIText : MonoBehaviour
 {
     float _alpha;
+    float _fadeSpeed;
+    float _defaultSpeed = 5;
     TextMeshProUGUI text;
     static UIText main;
 
@@ -27,13 +29,22 @@ public class UIText : MonoBehaviour
     {
         if (_alpha > 0)
         {
-            _alpha -= 0.2f * Time.deltaTime;
+            _alpha -= Time.deltaTime/_fadeSpeed;
             text.color = new Color(text.color.r, text.color.g, text.color.b, _alpha);
         }
     }
 
     void UpdateText(string newText)
     {
+        _fadeSpeed = _defaultSpeed;
+        text.text = newText;
+        _alpha = 1;
+        text.color = new Color(text.color.r, text.color.g, text.color.b, _alpha);
+    }
+
+    void UpdateText(string newText, float speed)
+    {
+        _fadeSpeed = speed;
         text.text = newText;
         _alpha = 1;
         text.color = new Color(text.color.r, text.color.g, text.color.b, _alpha);
@@ -42,5 +53,9 @@ public class UIText : MonoBehaviour
     public static void DisplayText(string newText)
     {
         main.UpdateText(newText);
+    }
+    public static void DisplayText(string newText, float speed)
+    {
+        main.UpdateText(newText, speed);
     }
 }
