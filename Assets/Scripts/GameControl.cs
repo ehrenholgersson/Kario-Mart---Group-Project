@@ -45,15 +45,15 @@ public class GameControl : MonoBehaviour
         // get UI script to update onscreen throttle/steering
         _ui = GameObject.Find("UI").GetComponent<UIScript>();
         // setup checkpoints
-        if (_checkpoints.Count > 0)
+        if (_checkpoints.Count > 1)
         {
-            _checkpoints[0].OnCheckpointTrigger += NextCheckpoint;
+            //_checkpoints[0].OnCheckpointTrigger += NextCheckpoint;
             for (int i = 1; i < _checkpoints.Count; i++)
             {
                 _checkpoints[i].gameObject.SetActive(false);
             }
         }
-            
+           _rocketcar.transform.position = _checkpoints[0].transform.position;
     }
     public void AddFuel(float amount)
     {
@@ -91,6 +91,8 @@ public class GameControl : MonoBehaviour
                 UIText.DisplayText("GO!");
                 _mode = Mode.Racing;
                 OnRaceStart?.Invoke();
+                if (_currentCheckpoint == 0) 
+                    NextCheckpoint();
             }
         }
         #region Controls
@@ -157,7 +159,8 @@ public class GameControl : MonoBehaviour
             _currentCheckpoint++;
             _checkpoints[_currentCheckpoint].gameObject.SetActive(true);
             _checkpoints[_currentCheckpoint].OnCheckpointTrigger += NextCheckpoint;
-            UIText.DisplayText("Checkpoint!",1);
+            if (_currentCheckpoint!=1)
+                UIText.DisplayText("Checkpoint!",1);
             
         }
         else
