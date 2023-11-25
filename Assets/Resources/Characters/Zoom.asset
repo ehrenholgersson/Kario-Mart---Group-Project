@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 1451675946256219064, guid: 6349670ea493ac640ae96417687bd312, type: 3}
   characterName: 
-  topSpeed: 4
-  acceleration: 4
-  handling: 4
-  grip: 4
+  topSpeed: 10
+  acceleration: 6
+  handling: 8
+  grip: 6

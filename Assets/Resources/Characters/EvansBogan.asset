@@ -16,5 +16,5 @@ MonoBehaviour:
   characterName: 
   topSpeed: 8
   acceleration: 8
-  handling: 8
-  grip: 8
+  handling: 6
+  grip: 5

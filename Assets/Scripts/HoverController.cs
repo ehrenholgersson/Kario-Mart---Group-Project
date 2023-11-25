@@ -23,6 +23,8 @@ public class HoverController : MonoBehaviour
     GameObject _playerModel;
     GameObject _virtualCam;
     GameObject _shield;
+
+    public bool Alive { get => _playerModel.activeSelf; }
     //[SerializeField] float Rotation;
     //Vector3 _desiredRotation;
     Rigidbody _rb;
@@ -85,14 +87,17 @@ public class HoverController : MonoBehaviour
         _rb.constraints = RigidbodyConstraints.FreezeAll;
         _playerModel.SetActive(false);
         await Task.Delay((int)(1000 * respawnTime));
-        if (this!=null)
+        if (this != null)
         {
-            transform.position = GameControl.RespawnPoint.transform.position;
-            transform.rotation = GameControl.RespawnPoint.transform.rotation;
             _explosion.Stop();
-            _rb.constraints = RigidbodyConstraints.None; 
-            _playerModel.SetActive(true);
-            _virtualCam.transform.position = transform.position;
+            if (GameControl.RaceState != GameControl.Mode.Finished)
+            {
+                transform.position = GameControl.RespawnPoint.transform.position;
+                transform.rotation = GameControl.RespawnPoint.transform.rotation;
+                _rb.constraints = RigidbodyConstraints.None;
+                _playerModel.SetActive(true);
+                _virtualCam.transform.position = transform.position;
+            }
         }
     }
     public async void PlayerDeath()
@@ -102,14 +107,17 @@ public class HoverController : MonoBehaviour
         _rb.constraints = RigidbodyConstraints.FreezeAll;
         _playerModel.SetActive(false);
         await Task.Delay(3000);
-        if (gameObject != null)
+        if (this != null)
         {
-            transform.position = GameControl.RespawnPoint.transform.position;
-            transform.rotation = GameControl.RespawnPoint.transform.rotation;
             _explosion.Stop();
-            _rb.constraints = RigidbodyConstraints.None;
-            _playerModel.SetActive(true);
-            _virtualCam.transform.position = transform.position;
+            if (GameControl.RaceState != GameControl.Mode.Finished)
+            {
+                transform.position = GameControl.RespawnPoint.transform.position;
+                transform.rotation = GameControl.RespawnPoint.transform.rotation;
+                _rb.constraints = RigidbodyConstraints.None;
+                _playerModel.SetActive(true);
+                _virtualCam.transform.position = transform.position;
+            }
         }
     }
 

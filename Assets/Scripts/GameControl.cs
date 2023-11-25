@@ -25,7 +25,7 @@ public class GameControl : MonoBehaviour
     UIScript _ui;
 
     protected int _currentCheckpoint = 0;
-    float _raceTimer = - 10;
+    float _raceTimer = - 7;
     float _remainingTime = 20;
     int countdown = 4;
 
@@ -142,7 +142,8 @@ public class GameControl : MonoBehaviour
             _mode = Mode.Finished;
             _remainingTime = 6;
             UIText.DisplayText("Times Up");
-            _rocketcar.PlayerDeath(20);
+            if (_rocketcar.Alive)
+                _rocketcar.PlayerDeath(20);
         }
         #endregion
     }
