@@ -16,9 +16,11 @@ public class Audio : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameControl.RemainingTime < 20)
+        if (GameControl.RemainingTime < 10 && GameControl.RaceState == GameControl.Mode.Racing)
         {
-            _audio.pitch = 5 - (GameControl.RemainingTime / 5);
+            _audio.pitch = 2 - (GameControl.RemainingTime / 10);
         }
+        else
+            _audio.pitch = 1;
     }
 }
