@@ -30,7 +30,7 @@ public class Options : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt("ResolutionX", (int)_availableResolutions[0].x);
-            PlayerPrefs.SetInt("ResolutionX", (int)_availableResolutions[0].y);
+            PlayerPrefs.SetInt("ResolutionY", (int)_availableResolutions[0].y);
             _resolutionText.text = "" + PlayerPrefs.GetInt("ResolutionX", 1920) + " X " + PlayerPrefs.GetInt("ResolutionY", 1080);
             SetResolution();
         }
