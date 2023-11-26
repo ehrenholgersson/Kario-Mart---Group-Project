@@ -169,7 +169,7 @@ public class GameControl : MonoBehaviour
         {
             UIText.DisplayText("Finished");
             _mode = Mode.Finished;
-            _remainingTime = 11;
+            _remainingTime = 6;
             // race is finished
         }
     }
