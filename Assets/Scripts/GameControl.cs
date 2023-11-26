@@ -45,15 +45,16 @@ public class GameControl : MonoBehaviour
         // get UI script to update onscreen throttle/steering
         _ui = GameObject.Find("UI").GetComponent<UIScript>();
         // setup checkpoints
-        if (_checkpoints.Count > 1)
-        {
-            //_checkpoints[0].OnCheckpointTrigger += NextCheckpoint;
-            for (int i = 1; i < _checkpoints.Count; i++)
-            {
-                _checkpoints[i].gameObject.SetActive(false);
-            }
-        }
-           _rocketcar.transform.position = _checkpoints[0].transform.position;
+        //if (_checkpoints.Count > 1)
+        //{
+        //    //_checkpoints[0].OnCheckpointTrigger += NextCheckpoint;
+        //    for (int i = 1; i < _checkpoints.Count; i++)
+        //    {
+        //        _checkpoints[i].gameObject.SetActive(false);
+        //    }
+        //}
+        _rocketcar.transform.position = _checkpoints[0].transform.position;
+        _rocketcar.transform.rotation = _checkpoints[0].transform.rotation;
     }
     public void AddFuel(float amount)
     {
@@ -154,10 +155,10 @@ public class GameControl : MonoBehaviour
         if (_currentCheckpoint < _checkpoints.Count-1) 
         {
             _checkpoints[_currentCheckpoint].OnCheckpointTrigger -= NextCheckpoint;
-            _checkpoints[_currentCheckpoint].gameObject.SetActive(false);
+            //_checkpoints[_currentCheckpoint].gameObject.SetActive(false);
             _remainingTime += _checkpoints[_currentCheckpoint].ExtraTime;
             _currentCheckpoint++;
-            _checkpoints[_currentCheckpoint].gameObject.SetActive(true);
+            //_checkpoints[_currentCheckpoint].gameObject.SetActive(true);
             _checkpoints[_currentCheckpoint].OnCheckpointTrigger += NextCheckpoint;
             if (_currentCheckpoint!=1)
                 UIText.DisplayText("Checkpoint!",1);
