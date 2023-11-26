@@ -55,6 +55,7 @@ public class GameControl : MonoBehaviour
         //}
         _rocketcar.transform.position = _checkpoints[0].transform.position;
         _rocketcar.transform.rotation = _checkpoints[0].transform.rotation;
+        Cursor.visible = false;
     }
     public void AddFuel(float amount)
     {
@@ -184,15 +185,22 @@ public class GameControl : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    private void OnDestroy()
+    {
+        Cursor.visible = true;
+    }
+
     public void ToggleMenu()
     {
         if (_menu.activeSelf)
         {
+            Cursor.visible = false;
             _menu.SetActive(false);
             Time.timeScale = 1;
         }
         else
         {
+            Cursor.visible = true;
             _menu.SetActive(true);
             Time.timeScale = 0;
         }
