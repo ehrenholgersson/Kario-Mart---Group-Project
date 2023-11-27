@@ -15,6 +15,7 @@ public class GameControl : MonoBehaviour
     [SerializeField] GameObject _menu;
 
     static GameControl _instance;   
+    public static Vector3 PlayerPosition { get => _instance._rocketcar.transform.position; }
     public static GameObject RespawnPoint { get => _instance.PrevCheckpoint(); }
     public static Action OnRaceStart;
 

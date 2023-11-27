@@ -19,7 +19,7 @@ public class Audio : MonoBehaviour
         if (GameControl.RemainingTime < 10 && GameControl.RaceState == GameControl.Mode.Racing)
         {
             _audio.pitch = 2 - (GameControl.RemainingTime / 10);
-            Debug.Log("Pitch set to " + (2 - (GameControl.RemainingTime / 10)));
+            //Debug.Log("Pitch set to " + (2 - (GameControl.RemainingTime / 10)));
         }
         else
             _audio.pitch = 1;
