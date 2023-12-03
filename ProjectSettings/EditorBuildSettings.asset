@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: be39c3ddcb78949458749106aa451f97
   - enabled: 1
+    path: Assets/Scenes/LVL_TryingMyBest.unity
+    guid: 86bc15b129bf23744b76e2b86e2f26b5
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}
