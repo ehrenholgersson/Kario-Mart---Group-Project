@@ -1,7 +1,5 @@
 # DaIdiox-Group_Project
 
-https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
-
 ## How to download and add as new Unity Project directly from page
 
 <ol>
@@ -23,8 +21,10 @@ https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
 <li> The Project should now appear in your projects list in Unity hub, click on it to open</li><br>
 </ol>
 
+<br>
 
-<br>
-<br>
-<br>
-<br>
+## To contribute via GitHub
+
+Reach out to myself (Ehren) on discord and I can add you as a contributer and walk through committing and pulling pushing via github. 
+
+https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
