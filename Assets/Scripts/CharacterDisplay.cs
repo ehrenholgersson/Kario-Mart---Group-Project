@@ -25,7 +25,10 @@ public class CharacterDisplay : MonoBehaviour
             _character.transform.localRotation = Quaternion.identity;
         }
         else
+        {
             Debug.Log("Failed to load character");
+            NextCharacter();
+        }
     }
     public void NextCharacter()
     {
@@ -41,8 +44,11 @@ public class CharacterDisplay : MonoBehaviour
             _character.transform.localRotation = Quaternion.identity;
         }
         else
+        {
             Debug.Log("Failed to load character");
-    }
+            NextCharacter();
+        }
+        }
     public void PreviousCharacter()
     {
         if (_character != null)
@@ -57,6 +63,9 @@ public class CharacterDisplay : MonoBehaviour
             _character.transform.localRotation = Quaternion.identity;
         }
         else
+        {
             Debug.Log("Failed to load character");
+            NextCharacter();
+        }
     }
 }
